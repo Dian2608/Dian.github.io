@@ -1,0 +1,29 @@
+---
+bibliography: References.bib
+---
+
+# Introduction of the antimicrobial resistance project
+At the moment I am following the course Data Science for Biology 2 at the Hogeschool Utrecht. In addition of this course we need to fulfill a project in groups of 2 or 3 students. My group got the subject Antimicrobial resistance (AMR). The aim of this project is to map the distribution of AMR genes (which are present on bacterial plasmids) in the Netherlands. This using illumina paired-end sequencing data. This data comes from the SRA database: https://www.ncbi.nlm.nih.gov/sra <br>
+
+To gather more information about this subject it is required to write an introduction for our project. In the text below I wrote a introduction for our project, with the main focus on the following questions: <br>
+- What is AMR? <br>
+- How do bacteria spread their resistance genes? <br>
+- What is conjugation? <br>
+- What is illumina sequencing? <br>
+
+## Antimicrobial resistance
+Antimicrobial resistance is the ability of micro-organisms to resist antimicrobial treatments. Bacteria wich are resistant to at least three different classes of antimicrobials, defined as multidrug resistant (MDR), have become commonplace. This is especially the case in hospitals. <br>
+
+Once a single bacterium mutates to become resistant to antibiotics, it can transfer that resistance to other bacteria around it through a process known as horizontal gene transfer. One of the main vehicles for gene transfer among bacteria are small circular pieces of DNA, or plasmids. Plasmids can be transferred through direct physical contact between bacteria in a process known as conjugation, which helps bacteria share their antibiotic resistance genes with their neighbors. [@PlasmidsSpreadAntibiotic] <br>
+
+## Bacterial conjugation
+Bacterial conjugation is one of the three major known modes of genetic exchange between bacteria, the other two being transduction and bacterial transformation.[@raleighConjugation2013] <br>
+Conjugation is the transfer of a plasmid or other self-transmissible DNA element and sometimes chromosomal DNA from a donor cell to a recipient cell via direct contact usually mediated by a conjugation pilus or sex pilus. [@llosaBacterialConjugationTwostep2002] <br>
+
+## Illumina paired-end sequencing
+For this project illumina paired-end sequencing data was gathered to map the information about the distribution of AMR genes in the Netherlands. The workflow of illumina next generation sequencing can be divided into four steps. This includes library preparation, cluster generation, sequencing and alignment/ data-analysis. [@NextGenerationSequencingBeginners] <br>
+
+First the DNA is fragmented using ultrasonic fragmentation. This produces fragments of 200-500 bp in lenght. The 5’ and 3’ adapter are added to the two ends of these small segments. <br>
+The DNA fragments in the sequencing library will randomly attach to the lanes on the surface of the flow cell when they pass through it. Flow cell is a channel for adsorbing mobile DNA fragments, and it’s also a core sequencing reactor vessel. Each flow cell has 8 Lanes, each lane has a number of adapters attached to the surface, which can match the adapters added at the ends of the DNA fragment in the building process. Bridge PCR was performed using the adapters on flow cell surface as template. After continuous amplification and mutation cycles, each DNA fragment will eventually be clustered in bundles at their respective locations. <br>
+The sequencing method is based on sequencing-by-synthesis (SBS). DNA polymerase, connector primers and 4 dNTP with base-specific fluorescent markers are added to the reaction system. The 3′-OH of these dNTP are protected by chemical methods, which ensures that only one base will be added at a time during the sequencing process. All unused free dNTP and DNA polymerase are eluted after the synthesis reaction finished.
+Then, buffer solution needed for fluorescence excitation are added, the fluorescence signal is excited by laser, and fluorescence signal is recorded by optical equipment. Finally, the optical signal is converted into sequencing base by computer analysis. When the fluorescence signal is recorded, a chemical reagent is added to quench the fluorescence signal and remove the dNTP 3′-OH protective group, so that the next round of sequencing reaction can be performed. The newly identified sequence reads can be aligned to a reference genome. [@cdadminPrincipleWorkflowIllumina2018] <br>

@@ -1,0 +1,59 @@
+# Parameterized report for the COVID-19 cases <br>
+## Introduction <br>
+In this report I will be analyzing the number of COVID-19 cases and deaths from 2020 till 2022. In this analysis I will be using parameters to visualize the number of COVID-19 cases and deaths. To execute this report I downloaded a dataset from the following website: <br>
+https://www.ecdc.europa.eu/en/publications-data/data-daily-new-cases-covid-19-eueea-country <br>
+
+## Required packages <br>
+The following packages must be installed to perform the code. If you want to use this code I highly recommend to download the required packages before running the code. <br>
+```{r library, warning=FALSE, message=FALSE}
+# install.packages("tidyverse")
+# install.packages("ggplot2")
+# install.packages("dplyr")
+```
+
+## Importing and filtering the data <br>
+For this report the data from Austria will be filtered to visualize the cases and deaths in 2022. 
+```{r import and filter, warning=FALSE, message=FALSE}
+# Load required libraries
+library(dplyr)
+
+# Import data from raw data folder
+covid_data <- read.csv(file = "./Data_raw/data.csv")
+
+# Set parameters
+# You can change these parameters to any you like
+country <- "Austria"
+year <- 2022
+period <- 10
+
+# Filter the data based on parameters
+filtered_data <- covid_data %>%
+  filter(countriesAndTerritories == country,
+         year == year,
+         month == period)
+```
+
+
+## Data visualisation <br>
+```{r data visualisation, warning=FALSE, message=FALSE}
+# Load library
+library(ggplot2)
+
+# Generate the graph for COVID-19 cases
+cases_plot <- ggplot(filtered_data, aes(x = as.Date(paste(year, month, day, sep = "-")), y = cases)) +
+  geom_line() +
+  labs(x = "Date", y = "Number of Cases", title = "Number of COVID-19 cases") +
+  theme_minimal()
+
+# See plot cases
+cases_plot
+
+# Generate the graph for COVID-19 deaths
+deaths_plot <- ggplot(filtered_data, aes(x = as.Date(paste(year, month, day, sep = "-")), y = deaths)) +
+  geom_line() +
+  labs(x = "Date", y = "Number of Deaths", title = "Number of deaths caused by COVID-19 infection") +
+  theme_minimal()
+
+# See plot deaths
+deaths_plot
+```

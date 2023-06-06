@@ -1,0 +1,24 @@
+--- 
+title: "Portfolio"
+author: "Dian Dupon"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+# Introduction
+My name is Dian and I am a third-year Life Sciences student at the Hogeschool Utrecht. In this third year I specialized in microbiology and data science. This portfolio was created on behalf of the Data Science for Biology 2 course.
+
+
+
+
+
