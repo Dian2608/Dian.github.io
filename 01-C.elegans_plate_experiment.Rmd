@@ -70,7 +70,7 @@ elegans_data_tidy$Normalized[elegans_data_tidy$expType == "Negative Control"] <-
 # Creating the plot with the normalized data
 elegans_data_tidy %>% ggplot(aes(x = log10(compConcentration+0.00005), y = Normalized)) +
   geom_jitter(aes(colour= compName, shape= expType), width = 0.05)+
-  labs(title = "Normalized C. elegans offspring count", x = "Compound Concentration (nM)", y = "Normalized Rawdata (offspring counts")
+  labs(title = "Normalized C. elegans offspring count", x = "Compound Concentration (nM)", y = "Normalized Rawdata (offspring counts)")
 ```
 
 ## Conclusion
