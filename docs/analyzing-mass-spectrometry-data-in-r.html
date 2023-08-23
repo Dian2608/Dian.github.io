@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Analyzing mass spectrometry data in R  | Portfolio</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Analyzing mass spectrometry data in R  | Portfolio" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Analyzing mass spectrometry data in R  | Portfolio" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Dian Dupon" />
+
+
+<meta name="date" content="2023-08-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="curriculum-vitae.html"/>
+<link rel="next" href="introduction-of-the-antimicrobial-resistance-project.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Portfolio Dian</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="c.-elegans-offspring-count-with-different-components.html"><a href="c.-elegans-offspring-count-with-different-components.html"><i class="fa fa-check"></i><b>2</b> C. elegans offspring count with different components</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="c.-elegans-offspring-count-with-different-components.html"><a href="c.-elegans-offspring-count-with-different-components.html#installing-packages"><i class="fa fa-check"></i><b>2.1</b> Installing packages</a></li>
+<li class="chapter" data-level="2.2" data-path="c.-elegans-offspring-count-with-different-components.html"><a href="c.-elegans-offspring-count-with-different-components.html#importing-the-data"><i class="fa fa-check"></i><b>2.2</b> Importing the data</a></li>
+<li class="chapter" data-level="2.3" data-path="c.-elegans-offspring-count-with-different-components.html"><a href="c.-elegans-offspring-count-with-different-components.html#scatterplot-of-the-c.-elegans-plate-experiment"><i class="fa fa-check"></i><b>2.3</b> Scatterplot of the C. elegans plate experiment</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="c.-elegans-offspring-count-with-different-components.html"><a href="c.-elegans-offspring-count-with-different-components.html#normalizing-the-data"><i class="fa fa-check"></i><b>2.3.1</b> Normalizing the data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="c.-elegans-offspring-count-with-different-components.html"><a href="c.-elegans-offspring-count-with-different-components.html#conclusion"><i class="fa fa-check"></i><b>2.4</b> Conclusion</a></li>
+<li class="chapter" data-level="2.5" data-path="c.-elegans-offspring-count-with-different-components.html"><a href="c.-elegans-offspring-count-with-different-components.html#further-analysis"><i class="fa fa-check"></i><b>2.5</b> Further analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="scoring-a-publication-on-reproducibility.html"><a href="scoring-a-publication-on-reproducibility.html"><i class="fa fa-check"></i><b>3</b> Scoring a publication on reproducibility <br></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="scoring-a-publication-on-reproducibility.html"><a href="scoring-a-publication-on-reproducibility.html#information-about-the-study"><i class="fa fa-check"></i><b>3.1</b> Information about the study</a></li>
+<li class="chapter" data-level="3.2" data-path="scoring-a-publication-on-reproducibility.html"><a href="scoring-a-publication-on-reproducibility.html#reproducibility-scoring"><i class="fa fa-check"></i><b>3.2</b> Reproducibility scoring</a></li>
+<li class="chapter" data-level="3.3" data-path="scoring-a-publication-on-reproducibility.html"><a href="scoring-a-publication-on-reproducibility.html#running-the-open-source-code"><i class="fa fa-check"></i><b>3.3</b> Running the open source code</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="guerrilla-analytics-structure.html"><a href="guerrilla-analytics-structure.html"><i class="fa fa-check"></i><b>4</b> Guerrilla analytics structure</a></li>
+<li class="chapter" data-level="5" data-path="curriculum-vitae.html"><a href="curriculum-vitae.html"><i class="fa fa-check"></i><b>5</b> Curriculum vitae</a></li>
+<li class="chapter" data-level="6" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html"><i class="fa fa-check"></i><b>6</b> Analyzing mass spectrometry data in R <br></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html#planning"><i class="fa fa-check"></i><b>6.2</b> Planning</a></li>
+<li class="chapter" data-level="6.3" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html#data-import"><i class="fa fa-check"></i><b>6.3</b> Data import</a></li>
+<li class="chapter" data-level="6.4" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html#spectra"><i class="fa fa-check"></i><b>6.4</b> Spectra</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html#visualisation-spectra"><i class="fa fa-check"></i><b>6.4.1</b> Visualisation spectra</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html#annotation-for-each-spectrum"><i class="fa fa-check"></i><b>6.5</b> Annotation for each spectrum</a></li>
+<li class="chapter" data-level="6.6" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html#visualization-of-the-data"><i class="fa fa-check"></i><b>6.6</b> Visualization of the data</a></li>
+<li class="chapter" data-level="6.7" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html#analyzing-maldi-tof-ms-data"><i class="fa fa-check"></i><b>6.7</b> Analyzing MALDI-TOF MS data</a></li>
+<li class="chapter" data-level="6.8" data-path="analyzing-mass-spectrometry-data-in-r.html"><a href="analyzing-mass-spectrometry-data-in-r.html#conclusion-1"><i class="fa fa-check"></i><b>6.8</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="introduction-of-the-antimicrobial-resistance-project.html"><a href="introduction-of-the-antimicrobial-resistance-project.html"><i class="fa fa-check"></i><b>7</b> Introduction of the antimicrobial resistance project</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="introduction-of-the-antimicrobial-resistance-project.html"><a href="introduction-of-the-antimicrobial-resistance-project.html#antimicrobial-resistance"><i class="fa fa-check"></i><b>7.1</b> Antimicrobial resistance</a></li>
+<li class="chapter" data-level="7.2" data-path="introduction-of-the-antimicrobial-resistance-project.html"><a href="introduction-of-the-antimicrobial-resistance-project.html#bacterial-conjugation"><i class="fa fa-check"></i><b>7.2</b> Bacterial conjugation</a></li>
+<li class="chapter" data-level="7.3" data-path="introduction-of-the-antimicrobial-resistance-project.html"><a href="introduction-of-the-antimicrobial-resistance-project.html#illumina-paired-end-sequencing"><i class="fa fa-check"></i><b>7.3</b> Illumina paired-end sequencing</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="relational-databases.html"><a href="relational-databases.html"><i class="fa fa-check"></i><b>8</b> Relational databases</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="relational-databases.html"><a href="relational-databases.html#introduction-2"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="relational-databases.html"><a href="relational-databases.html#required-packages"><i class="fa fa-check"></i><b>8.2</b> Required packages</a></li>
+<li class="chapter" data-level="8.3" data-path="relational-databases.html"><a href="relational-databases.html#tidy-data"><i class="fa fa-check"></i><b>8.3</b> Tidy data</a></li>
+<li class="chapter" data-level="8.4" data-path="relational-databases.html"><a href="relational-databases.html#inspecting-the-data-with-dbeaver"><i class="fa fa-check"></i><b>8.4</b> Inspecting the data with DBeaver</a></li>
+<li class="chapter" data-level="8.5" data-path="relational-databases.html"><a href="relational-databases.html#inspecting-the-data-with-dplyr"><i class="fa fa-check"></i><b>8.5</b> Inspecting the data with dplyr</a></li>
+<li class="chapter" data-level="8.6" data-path="relational-databases.html"><a href="relational-databases.html#data-visualisation"><i class="fa fa-check"></i><b>8.6</b> Data visualisation</a></li>
+<li class="chapter" data-level="8.7" data-path="relational-databases.html"><a href="relational-databases.html#conclusion-2"><i class="fa fa-check"></i><b>8.7</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="parameterized-report-for-the-covid-19-cases.html"><a href="parameterized-report-for-the-covid-19-cases.html"><i class="fa fa-check"></i><b>9</b> Parameterized report for the COVID-19 cases</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="parameterized-report-for-the-covid-19-cases.html"><a href="parameterized-report-for-the-covid-19-cases.html#introduction-3"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="parameterized-report-for-the-covid-19-cases.html"><a href="parameterized-report-for-the-covid-19-cases.html#required-packages-1"><i class="fa fa-check"></i><b>9.2</b> Required packages</a></li>
+<li class="chapter" data-level="9.3" data-path="parameterized-report-for-the-covid-19-cases.html"><a href="parameterized-report-for-the-covid-19-cases.html#importing-and-filtering-the-data"><i class="fa fa-check"></i><b>9.3</b> Importing and filtering the data</a></li>
+<li class="chapter" data-level="9.4" data-path="parameterized-report-for-the-covid-19-cases.html"><a href="parameterized-report-for-the-covid-19-cases.html#data-visualisation-1"><i class="fa fa-check"></i><b>9.4</b> Data visualisation</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Portfolio</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="analyzing-mass-spectrometry-data-in-r" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Analyzing mass spectrometry data in R <br><a href="analyzing-mass-spectrometry-data-in-r.html#analyzing-mass-spectrometry-data-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-1" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Introduction<a href="analyzing-mass-spectrometry-data-in-r.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Since my last study I have become very interested in microbiology. This has led me to choose to follow my specialization in microbiology at my current study Life Sciences. This has made me even more enthusiastic about the profession. In 2 years time I see myself working in diagnostics at a medical microbiology laboratory. To achieve this goal, I will complete my graduation internship in a similar direction as well. <br></p>
+<p>In microbiology, MALDI-TOF MS is currently a widely used method to quickly identify a bacterial species. For this reason, I thought it would be interesting to process raw data from a mass spectrometry experiment in R and visualize the results.
+MALDI-TOF MS, or Matrix Assisted Laser Desorption/Ionization Time of Flight Mass Spectrometry, separates ions by their mass to charge ratio and determines that mass to charge ratio by the time it takes for the ions to reach a detector. <br></p>
+</div>
+<div id="planning" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Planning<a href="analyzing-mass-spectrometry-data-in-r.html#planning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The first thing I’m going to do is delve into the analysis of mass spectrometry data in R. Have packages already been made for the analysis of MALDI-TOF MS data or mass spectrometry data in general? <br>
+To achieve my goal I will take the following steps: <br>
+- Finding articles about the subject of mass spectrometry <br>
+- Finding mass spectrometry data (preferably from a MALDI-TOF experiment) <br>
+- Finding out the structure of mass spectrometry data files <br>
+- Writing code to visualize mass spectrometry data <br>
+- Writing code to visualize or highlight specific m/z values in a figure <br></p>
+</div>
+<div id="data-import" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Data import<a href="analyzing-mass-spectrometry-data-in-r.html#data-import" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To get started with the processing of raw mass spectrometry data I will first need to find some data to work with. There are several packages with mass spectrometry data available. I used the data from the <code>msdata</code> package. The <code>msdata</code> data package provides multiple raw data mass spectrometry files.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb34-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(msdata)</span>
+<span id="cb34-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="analyzing-mass-spectrometry-data-in-r.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get files from msdata</span></span>
+<span id="cb34-5"><a href="analyzing-mass-spectrometry-data-in-r.html#cb34-5" aria-hidden="true" tabindex="-1"></a>fls <span class="ot">&lt;-</span> <span class="fu">proteomics</span>(<span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-6"><a href="analyzing-mass-spectrometry-data-in-r.html#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="analyzing-mass-spectrometry-data-in-r.html#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(fls)</span></code></pre></div>
+<pre><code>## [1] &quot;MRM-standmix-5.mzML.gz&quot;                                                
+## [2] &quot;MS3TMT10_01022016_32917-33481.mzML.gz&quot;                                 
+## [3] &quot;MS3TMT11.mzML&quot;                                                         
+## [4] &quot;TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz&quot;
+## [5] &quot;TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.mzML.gz&quot;</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Path variable to the file of choice</span></span>
+<span id="cb36-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="do">## I chose the second file, but you can change it to any you like. It is also possible to do all files.</span></span>
+<span id="cb36-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb36-3" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> fls[<span class="dv">2</span>]</span>
+<span id="cb36-4"><a href="analyzing-mass-spectrometry-data-in-r.html#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="analyzing-mass-spectrometry-data-in-r.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check</span></span>
+<span id="cb36-6"><a href="analyzing-mass-spectrometry-data-in-r.html#cb36-6" aria-hidden="true" tabindex="-1"></a>path</span></code></pre></div>
+<pre><code>## [1] &quot;C:/Users/diand/AppData/Local/R/win-library/4.2/msdata/proteomics/MS3TMT10_01022016_32917-33481.mzML.gz&quot;</code></pre>
+<p>Now that I have provided the file path, I will try to access the data with the <code>mzR</code> package. The <code>mzR</code> package aims at providing a common, low-level interface to several mass spectrometry data formats. With this package I can check the number of spectra, which is important for a identification for instance. <br></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb38-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mzR)</span>
+<span id="cb38-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="analyzing-mass-spectrometry-data-in-r.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the MS file from the path variable </span></span>
+<span id="cb38-5"><a href="analyzing-mass-spectrometry-data-in-r.html#cb38-5" aria-hidden="true" tabindex="-1"></a>msfile <span class="ot">&lt;-</span> <span class="fu">openMSfile</span>(path, <span class="at">backend =</span> <span class="cn">NULL</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb38-6"><a href="analyzing-mass-spectrometry-data-in-r.html#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="analyzing-mass-spectrometry-data-in-r.html#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check number of spectra</span></span>
+<span id="cb38-8"><a href="analyzing-mass-spectrometry-data-in-r.html#cb38-8" aria-hidden="true" tabindex="-1"></a>msfile</span></code></pre></div>
+<pre><code>## Mass Spectrometry file handle.
+## Filename:  MS3TMT10_01022016_32917-33481.mzML.gz 
+## Number of scans:  565</code></pre>
+</div>
+<div id="spectra" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Spectra<a href="analyzing-mass-spectrometry-data-in-r.html#spectra" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can check the spectra of the file we just loaded into R with the spectra function of the <code>mzR</code> package. It is possible to see specific spectra of the file by providing the index of a spectrum, but it is also possible to just check all spectra. Because I am not looking for a specific spectra I will check the spectra of sample 1. I also demonstrated the usage of the spectra function if you would like to look at two specific spectra or all spectra. The output is a matrix which consists of two columns. One column for the mflz-values and the second column shows the intensity’s for the mflz-files. If you load all spectra, in this case 565 spectra, it gives a lot of output. Under the guise of keeping this Rmarkdown tidy, I won’t show the output of the code to load all spectra.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read one spectra from the input file</span></span>
+<span id="cb40-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb40-2" aria-hidden="true" tabindex="-1"></a>spectra1 <span class="ot">&lt;-</span> <span class="fu">spectra</span>(msfile, <span class="dv">1</span>)</span>
+<span id="cb40-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(spectra1)</span></code></pre></div>
+<pre><code>##            mz intensity
+## [1,] 376.2217         0
+## [2,] 376.2227         0
+## [3,] 376.2237         0
+## [4,] 376.2247         0
+## [5,] 380.7361         0
+## [6,] 380.7371         0</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read multiple specific spectra </span></span>
+<span id="cb42-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb42-2" aria-hidden="true" tabindex="-1"></a>spectra2 <span class="ot">&lt;-</span> <span class="fu">spectra</span>(msfile, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span>
+<span id="cb42-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(spectra2)</span>
+<span id="cb42-4"><a href="analyzing-mass-spectrometry-data-in-r.html#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="analyzing-mass-spectrometry-data-in-r.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read all spectra from the input file</span></span>
+<span id="cb42-6"><a href="analyzing-mass-spectrometry-data-in-r.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="do">## all_spectra &lt;- spectra(msfile)</span></span>
+<span id="cb42-7"><a href="analyzing-mass-spectrometry-data-in-r.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="do">## head(all_spectra)</span></span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Length of the spectra</span></span>
+<span id="cb43-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(spectra1)</span></code></pre></div>
+<pre><code>## [1] 96608</code></pre>
+<div id="visualisation-spectra" class="section level3 hasAnchor" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Visualisation spectra<a href="analyzing-mass-spectrometry-data-in-r.html#visualisation-spectra" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To get a better overview of what exactly the spectra entail, I wanted to visualize the spectra. This can also be done with the <code>mzR</code> package. I used the peaks function to extract the peaks and visualize them in a plot. In this case spectrum 8 was used. <br></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read a spectrum from the file</span></span>
+<span id="cb45-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb45-2" aria-hidden="true" tabindex="-1"></a>peak <span class="ot">&lt;-</span> <span class="fu">peaks</span>(msfile, <span class="dv">8</span>)</span>
+<span id="cb45-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(peak)</span></code></pre></div>
+<pre><code>##            mz intensity
+## [1,] 182.7910  39.12186
+## [2,] 197.1867  46.60393
+## [3,] 198.4393  92.85271
+## [4,] 199.1400  52.84999
+## [5,] 201.2341  42.46858
+## [6,] 204.3054  54.46336</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count of the spectra peaks</span></span>
+<span id="cb47-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">peaksCount</span>(msfile, <span class="dv">8</span>)</span></code></pre></div>
+<pre><code>## [1] 858</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the peaks</span></span>
+<span id="cb49-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(peak[,<span class="dv">1</span>], peak[,<span class="dv">2</span>], <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">lwd=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Dian-portfolio_files/figure-html/spectra%20visualisation-1.png" width="672" /></p>
+</div>
+</div>
+<div id="annotation-for-each-spectrum" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Annotation for each spectrum<a href="analyzing-mass-spectrometry-data-in-r.html#annotation-for-each-spectrum" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that I have verified the presence of the spectra in the data, we can look at the corresponding annotation. This annotation is necessary to distinguish the spectra of different samples. In the data file I used, the different samples are encoded with numbers.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check annotation only</span></span>
+<span id="cb50-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb50-2" aria-hidden="true" tabindex="-1"></a>hdr <span class="ot">&lt;-</span> <span class="fu">header</span>(msfile)</span>
+<span id="cb50-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(hdr)</span></code></pre></div>
+<pre><code>##   seqNum acquisitionNum msLevel polarity peaksCount totIonCurrent retentionTime
+## 1      1          32918       1        1      48304  3005937408.0      4422.620
+## 2      2          32919       2        1        755     1025988.7      4422.648
+## 3      3          32920       2        1        803      697426.6      4422.670
+## 4      4          32921       2        1        765     1220569.9      4422.735
+## 5      5          32922       2        1        499      494725.3      4422.800
+## 6      6          32923       3        1       2540     2522363.0      4423.036
+##   basePeakMZ basePeakIntensity collisionEnergy ionisationEnergy    lowMZ
+## 1   696.7169      172620640.00              NA                0 376.2217
+## 2   646.4719         121457.00              35                0 187.1043
+## 3   641.8309          60390.23              35                0 188.2159
+## 4   549.6967         103048.61              35                0 200.2342
+## 5   718.6267         114702.83              35                0 166.0463
+## 6   129.1378         275641.03              65                0  99.0060
+##      highMZ precursorScanNum precursorMZ precursorCharge precursorIntensity
+## 1 1515.1263               NA          NA              NA                 NA
+## 2 1645.9059            32918    652.3426               3            9841531
+## 3 1701.1073            32918    647.3441               3            3921567
+## 4 1596.3099            32918    673.3353               3            7623700
+## 5 1374.6786            32918    575.0026               3            2357085
+## 6  505.0462               NA    490.2629               0                  0
+##   mergedScan mergedResultScanNum mergedResultStartScanNum
+## 1         NA                  NA                       NA
+## 2         NA                  NA                       NA
+## 3         NA                  NA                       NA
+## 4         NA                  NA                       NA
+## 5         NA                  NA                       NA
+## 6         NA                  NA                       NA
+##   mergedResultEndScanNum injectionTime
+## 1                     NA     0.8102598
+## 2                     NA    10.8435907
+## 3                     NA    18.6941528
+## 4                     NA    12.3253975
+## 5                     NA     8.1776628
+## 6                     NA    52.0793648
+##                                                                          filterString
+## 1                                           FTMS + p NSI Full ms [380.0000-1500.0000]
+## 2                    ITMS + c NSI t d Full ms2 652.3426@cid35.00 [174.0000-1968.0000]
+## 3                    ITMS + c NSI t d Full ms2 647.6781@cid35.00 [173.0000-1954.0000]
+## 4                    ITMS + c NSI t d Full ms2 673.6693@cid35.00 [180.0000-2000.0000]
+## 5                    ITMS + c NSI t d Full ms2 575.0026@cid35.00 [153.0000-1736.0000]
+## 6 FTMS + p NSI sps d Full ms3 673.6693@cid35.00 490.2629@hcd65.00 [100.0000-500.0000]
+##                                       spectrumId centroided
+## 1 controllerType=0 controllerNumber=1 scan=32918      FALSE
+## 2 controllerType=0 controllerNumber=1 scan=32919       TRUE
+## 3 controllerType=0 controllerNumber=1 scan=32920       TRUE
+## 4 controllerType=0 controllerNumber=1 scan=32921       TRUE
+## 5 controllerType=0 controllerNumber=1 scan=32922       TRUE
+## 6 controllerType=0 controllerNumber=1 scan=32923      FALSE
+##   ionMobilityDriftTime isolationWindowTargetMZ isolationWindowLowerOffset
+## 1                   NA                      NA                         NA
+## 2                   NA                  652.34                       0.35
+## 3                   NA                  647.68                       0.35
+## 4                   NA                  673.67                       0.35
+## 5                   NA                  575.00                       0.35
+## 6                   NA                  490.26                         NA
+##   isolationWindowUpperOffset scanWindowLowerLimit scanWindowUpperLimit
+## 1                         NA                  380                 1500
+## 2                       0.35                  174                 1968
+## 3                       0.35                  173                 1954
+## 4                       0.35                  180                 2000
+## 5                       0.35                  153                 1736
+## 6                         NA                  100                  500</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check annotation of specific spectra</span></span>
+<span id="cb52-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb52-2" aria-hidden="true" tabindex="-1"></a>hdr_sp <span class="ot">&lt;-</span> <span class="fu">header</span>(msfile, <span class="dv">8</span>)</span>
+<span id="cb52-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(hdr_sp)</span></code></pre></div>
+<pre><code>##   seqNum acquisitionNum msLevel polarity peaksCount totIonCurrent retentionTime
+## 1      8          32925       2        1        858      627600.3      4423.094
+##   basePeakMZ basePeakIntensity collisionEnergy ionisationEnergy   lowMZ
+## 1    663.859          28716.19              35                0 182.791
+##     highMZ precursorScanNum precursorMZ precursorCharge precursorIntensity
+## 1 1715.989            32918    675.6938               3            4257284
+##   mergedScan mergedResultScanNum mergedResultStartScanNum
+## 1         NA                  NA                       NA
+##   mergedResultEndScanNum injectionTime
+## 1                     NA      16.85191
+##                                                       filterString
+## 1 ITMS + c NSI t d Full ms2 675.6938@cid35.00 [181.0000-2000.0000]
+##                                       spectrumId centroided
+## 1 controllerType=0 controllerNumber=1 scan=32925       TRUE
+##   ionMobilityDriftTime isolationWindowTargetMZ isolationWindowLowerOffset
+## 1                   NA                  675.69                       0.35
+##   isolationWindowUpperOffset scanWindowLowerLimit scanWindowUpperLimit
+## 1                       0.35                  181                 2000</code></pre>
+<p>After obtaining the annotation, I want to visualize the data I have up until this moment. This can be done with the <code>MSnbase</code> package and the <code>msdata</code> package. The readMSdata function of the <code>MSnbase</code> package takes as input the file path to one or multiple raw mass spectrometry files. It generates an MSnExp object.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb54-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MSnbase)</span>
+<span id="cb54-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="analyzing-mass-spectrometry-data-in-r.html#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge annotation with spectra</span></span>
+<span id="cb54-5"><a href="analyzing-mass-spectrometry-data-in-r.html#cb54-5" aria-hidden="true" tabindex="-1"></a>mse <span class="ot">&lt;-</span> <span class="fu">readMSData</span>(path, <span class="at">mode =</span> <span class="st">&quot;onDisk&quot;</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb54-6"><a href="analyzing-mass-spectrometry-data-in-r.html#cb54-6" aria-hidden="true" tabindex="-1"></a>mse</span></code></pre></div>
+<pre><code>## MSn experiment data (&quot;OnDiskMSnExp&quot;)
+## Object size in memory: 0.32 Mb
+## - - - Spectra data - - -
+##  MS level(s): 1 2 3 
+##  Number of spectra: 565 
+##  MSn retention times: 73:43 - 74:54 minutes
+## - - - Processing information - - -
+## Data loaded [Wed Aug 23 12:30:24 2023] 
+##  MSnbase version: 2.24.2 
+## - - - Meta data  - - -
+## phenoData
+##   rowNames: MS3TMT10_01022016_32917-33481.mzML.gz
+##   varLabels: sampleNames
+##   varMetadata: labelDescription
+## Loaded from:
+##   MS3TMT10_01022016_32917-33481.mzML.gz 
+## protocolData: none
+## featureData
+##   featureNames: F1.S001 F1.S002 ... F1.S565 (565 total)
+##   fvarLabels: fileIdx spIdx ... spectrum (35 total)
+##   fvarMetadata: labelDescription
+## experimentData: use &#39;experimentData(object)&#39;</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Access individual spectra information</span></span>
+<span id="cb56-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb56-2" aria-hidden="true" tabindex="-1"></a>mse[[<span class="dv">8</span>]]</span></code></pre></div>
+<pre><code>## Object of class &quot;Spectrum2&quot;
+##  Precursor: 675.6938 
+##  Retention time: 73:43 
+##  Charge: 3 
+##  MSn level: 2 
+##  Peaks count: 858 
+##  Total ion count: 627600.3</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check annotation and raw spectra data</span></span>
+<span id="cb58-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="do">## The output will not be shown to keep the page tidy. </span></span>
+<span id="cb58-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fData</span>(mse)</span></code></pre></div>
+</div>
+<div id="visualization-of-the-data" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Visualization of the data<a href="analyzing-mass-spectrometry-data-in-r.html#visualization-of-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To visualize the spectral data with the annotations I created a function called visualizeSpectraWithAnnotations. This function takes the created mse object and an optional spectrumIndex parameter to specify which spectrum you want to visualize. Inside the function, I use mse[spectrumIndex] to access the spectral data for the selected spectrum. Next the attr function is used to access the annotation data associated with the spectrum. The spectra will then be plotted with the plot function.
+If annotation data is available, it will be printed to the console. You can customize this part to visualize or process the annotation data as needed.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to visualize spectral data with annotations</span></span>
+<span id="cb59-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-2" aria-hidden="true" tabindex="-1"></a>visualizeSpectraWithAnnotations <span class="ot">&lt;-</span> <span class="cf">function</span>(mse, <span class="at">spectrumIndex =</span> <span class="dv">1</span>) {</span>
+<span id="cb59-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb59-4"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the spectral data for the specified spectrumIndex</span></span>
+<span id="cb59-5"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-5" aria-hidden="true" tabindex="-1"></a>  spectrum <span class="ot">&lt;-</span> mse[spectrumIndex]</span>
+<span id="cb59-6"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb59-7"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the annotation data for the specified spectrumIndex</span></span>
+<span id="cb59-8"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-8" aria-hidden="true" tabindex="-1"></a>  annotation_data <span class="ot">&lt;-</span> <span class="fu">attr</span>(spectrum, <span class="st">&quot;SpectraAnnotations&quot;</span>)</span>
+<span id="cb59-9"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb59-10"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the spectrum</span></span>
+<span id="cb59-11"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(spectrum)</span>
+<span id="cb59-12"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb59-13"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if annotation data is available for the selected spectrum</span></span>
+<span id="cb59-14"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(annotation_data)) {</span>
+<span id="cb59-15"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the annotation data</span></span>
+<span id="cb59-16"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(annotation_data)</span>
+<span id="cb59-17"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb59-18"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb59-19"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-20"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage:</span></span>
+<span id="cb59-21"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Assuming the &#39;mse&#39; object is already created</span></span>
+<span id="cb59-22"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualize the first spectrum with annotations</span></span>
+<span id="cb59-23"><a href="analyzing-mass-spectrometry-data-in-r.html#cb59-23" aria-hidden="true" tabindex="-1"></a><span class="fu">visualizeSpectraWithAnnotations</span>(mse, <span class="at">spectrumIndex =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Dian-portfolio_files/figure-html/create%20visual%20function-1.png" width="672" /></p>
+</div>
+<div id="analyzing-maldi-tof-ms-data" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Analyzing MALDI-TOF MS data<a href="analyzing-mass-spectrometry-data-in-r.html#analyzing-maldi-tof-ms-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that I have visualized raw mass spectrometry data, it is time for the real challenge. In the beginning of this chapter I already mentioned that I wanted to visualize MALDI-TOF MS data. For this instance I need to look for a package that works with this format. After some research I found the <code>MALDIquant</code> package. This package is specifically designed for MALDI-TOF MS data. To demonstrate the visualization of MALDI-TOS MS data I used the fiedler2009subset dataset. This data is a list of 16 mass spectrum objects and is available with the <code>MALDIquant</code> package. <br></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb60-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MALDIquant)</span>
+<span id="cb60-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="analyzing-mass-spectrometry-data-in-r.html#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data </span></span>
+<span id="cb60-5"><a href="analyzing-mass-spectrometry-data-in-r.html#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;fiedler2009subset&quot;</span>)</span>
+<span id="cb60-6"><a href="analyzing-mass-spectrometry-data-in-r.html#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-7"><a href="analyzing-mass-spectrometry-data-in-r.html#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick inspection of two of the spectra</span></span>
+<span id="cb60-8"><a href="analyzing-mass-spectrometry-data-in-r.html#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fiedler2009subset[[<span class="dv">2</span>]])</span></code></pre></div>
+<p><img src="Dian-portfolio_files/figure-html/maldiquant-1.png" width="672" /></p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fiedler2009subset[[<span class="dv">8</span>]])</span></code></pre></div>
+<p><img src="Dian-portfolio_files/figure-html/maldiquant-2.png" width="672" /></p>
+<p>The identification of specific proteins or bacteria can be done in different ways. For example, a specific m/z value can be highlighted. It can also be useful to be able to highlight a known peak pattern, in this case of a bacterium.
+First of all, I tried to highlight a specific m/z value or at least indicate it in an entire spectra. To achieve this I wrote a function which takes as input the file with the m/z values, the desired m/z value to be highlighted and the tolerance. For example, if you set the mz_value parameter to 300.0 and the tolerance parameter to 0.1, the function will search for a peak in the spectra with an m/z value that is within ±0.1 of 300.0. If a peak is found within this range, it will be considered a match and highlighted in the plot.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load library</span></span>
+<span id="cb62-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb62-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create function</span></span>
+<span id="cb62-5"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-5" aria-hidden="true" tabindex="-1"></a>highlight_mz <span class="ot">&lt;-</span> <span class="cf">function</span>(mzml_path, mz_value, <span class="at">tolerance =</span> <span class="fl">0.1</span>) {</span>
+<span id="cb62-6"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb62-7"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Open mzML file</span></span>
+<span id="cb62-8"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-8" aria-hidden="true" tabindex="-1"></a>  msfile <span class="ot">&lt;-</span> <span class="fu">openMSfile</span>(path, <span class="at">backend =</span> <span class="cn">NULL</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb62-9"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-10"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the nearest peak to the desired m/z value</span></span>
+<span id="cb62-11"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-11" aria-hidden="true" tabindex="-1"></a>  nearest_peak <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb62-12"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-12" aria-hidden="true" tabindex="-1"></a>  nearest_distance <span class="ot">&lt;-</span> <span class="cn">Inf</span></span>
+<span id="cb62-13"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-13" aria-hidden="true" tabindex="-1"></a>  spectra <span class="ot">&lt;-</span> <span class="fu">spectra</span>(msfile, <span class="dv">1</span>)</span>
+<span id="cb62-14"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(spectra)) {</span>
+<span id="cb62-15"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-15" aria-hidden="true" tabindex="-1"></a>    peaks <span class="ot">&lt;-</span> <span class="fu">peaks</span>(msfile, <span class="dv">8</span>)</span>
+<span id="cb62-16"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-16" aria-hidden="true" tabindex="-1"></a>    distances <span class="ot">&lt;-</span> <span class="fu">abs</span>(peaks[, <span class="dv">1</span>] <span class="sc">-</span> mz_value)</span>
+<span id="cb62-17"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-17" aria-hidden="true" tabindex="-1"></a>    min_distance <span class="ot">&lt;-</span> <span class="fu">min</span>(distances)</span>
+<span id="cb62-18"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (min_distance <span class="sc">&lt;</span> nearest_distance) {</span>
+<span id="cb62-19"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-19" aria-hidden="true" tabindex="-1"></a>      nearest_peak <span class="ot">&lt;-</span> peaks[<span class="fu">which</span>(distances <span class="sc">==</span> min_distance), ]</span>
+<span id="cb62-20"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-20" aria-hidden="true" tabindex="-1"></a>      nearest_distance <span class="ot">&lt;-</span> min_distance</span>
+<span id="cb62-21"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb62-22"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb62-23"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-24"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Highlight the nearest peak and create a plot</span></span>
+<span id="cb62-25"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(nearest_peak) <span class="sc">&amp;&amp;</span> nearest_distance <span class="sc">&lt;=</span> tolerance) {</span>
+<span id="cb62-26"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-26" aria-hidden="true" tabindex="-1"></a>    nearest_peak<span class="sc">$</span>intensity <span class="ot">&lt;-</span> <span class="fl">1.0</span>  <span class="co"># Set intensity to 1.0 to highlight</span></span>
+<span id="cb62-27"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-28"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert nearest_peak to data frame</span></span>
+<span id="cb62-29"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-29" aria-hidden="true" tabindex="-1"></a>    nearest_peak <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(nearest_peak)</span>
+<span id="cb62-30"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb62-31"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the spectrum</span></span>
+<span id="cb62-32"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-32" aria-hidden="true" tabindex="-1"></a>    p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> nearest_peak, <span class="fu">aes</span>(<span class="at">x =</span> mz, <span class="at">y =</span> intensity)) <span class="sc">+</span></span>
+<span id="cb62-33"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb62-34"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb62-35"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;m/z value&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Intensity&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Highlighted m/z Spectrum&quot;</span>)</span>
+<span id="cb62-36"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb62-37"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(p)</span>
+<span id="cb62-38"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-38" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb62-39"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&quot;No peak found within the specified tolerance.</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb62-40"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-40" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb62-41"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-41" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb62-42"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-43"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb62-44"><a href="analyzing-mass-spectrometry-data-in-r.html#cb62-44" aria-hidden="true" tabindex="-1"></a><span class="fu">highlight_mz</span>(<span class="st">&quot;msfile&quot;</span>, <span class="fl">700.0</span>, <span class="at">tolerance =</span> <span class="fl">1.0</span>)</span></code></pre></div>
+<p><img src="Dian-portfolio_files/figure-html/specific%20m/z-1.png" width="672" /></p>
+<p>As you can see the code is not working optimally. The indicated m/z value is indicated in the plot, but the spectra are not present. This is due to the fact that the fiedler2009subset is a list. For this reason I will try a different approach.
+In the code below I created a loop that goes over the 16 spectra. First you can set the highlight_mz variable to the specific m/z value you want to highlight in the plots, in this case 3000. The next line opens a PDF file for saving the individual mass spectrometry plots named maldi_plot.pdf. The loop iterates through each MassSpectrum object in the fiedler2009subset dataset. Then the m/z and intensity values are extracted from the current MassSpectrum object using as.matrix. Finally, a plot is made of the mass spectra with the m/z values and the intensity values. The previously specified m/z value will be highlighted and all the plots will be visible in the maldi_plot.pdf file. This file is available in the data folder of this page. To show the output of this code two of the plots are displayed in this Rmarkdown. <br></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the specific m/z value you want to highlight</span></span>
+<span id="cb63-2"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-2" aria-hidden="true" tabindex="-1"></a>highlight_mz <span class="ot">&lt;-</span> <span class="dv">3000</span></span>
+<span id="cb63-3"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a plot for each MassSpectrum in the list</span></span>
+<span id="cb63-5"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;maldi_plot.pdf&quot;</span>)  <span class="co"># Change the filename and format if needed</span></span>
+<span id="cb63-6"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-7"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through the list of MassSpectrum objects</span></span>
+<span id="cb63-8"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fiedler2009subset)) {</span>
+<span id="cb63-9"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-9" aria-hidden="true" tabindex="-1"></a>  ms <span class="ot">&lt;-</span> fiedler2009subset[[i]]</span>
+<span id="cb63-10"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb63-11"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract the m/z and intensity values using as.matrix</span></span>
+<span id="cb63-12"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-12" aria-hidden="true" tabindex="-1"></a>  ms_matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(ms)</span>
+<span id="cb63-13"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-13" aria-hidden="true" tabindex="-1"></a>  mz_values <span class="ot">&lt;-</span> ms_matrix[, <span class="dv">1</span>]</span>
+<span id="cb63-14"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-14" aria-hidden="true" tabindex="-1"></a>  intensity_values <span class="ot">&lt;-</span> ms_matrix[, <span class="dv">2</span>]</span>
+<span id="cb63-15"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb63-16"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the mass spectrum</span></span>
+<span id="cb63-17"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(mz_values, intensity_values, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>,</span>
+<span id="cb63-18"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">10000</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(intensity_values) <span class="sc">+</span> <span class="dv">100</span>),</span>
+<span id="cb63-19"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;m/z&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Intensity&quot;</span>)</span>
+<span id="cb63-20"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb63-21"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add a vertical line to highlight the specific m/z value</span></span>
+<span id="cb63-22"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> highlight_mz, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb63-23"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb63-24"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add a title to the plot</span></span>
+<span id="cb63-25"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="fu">paste</span>(<span class="st">&quot;Spectrum&quot;</span>, i))</span>
+<span id="cb63-26"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb63-27"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Pause briefly to view each plot (optional)</span></span>
+<span id="cb63-28"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">2</span>)</span>
+<span id="cb63-29"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb63-30"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-31"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the PDF file</span></span>
+<span id="cb63-32"><a href="analyzing-mass-spectrometry-data-in-r.html#cb63-32" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<div class="figure">
+<img src="Images/Screenshot_spectrum1.png" style="width:50.0%" alt="" />
+<p class="caption">Spectrum 1 of the fiedler2009subset dataset</p>
+</div>
+<div class="figure">
+<img src="Images/Screenshot_spectrum2.png" style="width:50.0%" alt="" />
+<p class="caption">Spectrum 2 of the fiedler2009subset dataset</p>
+</div>
+</div>
+<div id="conclusion-1" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Conclusion<a href="analyzing-mass-spectrometry-data-in-r.html#conclusion-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Looking back at the initial planning I can say that it is possible to visualize MALDI-TOF MS data in R and make a specific m/z value visible in a plot. With the written code, a clear pdf-file is now made of multiple spectra within a dataset. Also a specific m/z value can be highlighted within the spectra. In the future I would like to extend this code, so that the spectra of a dataset can be compared with the spectra of a specific bacterium.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="curriculum-vitae.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-of-the-antimicrobial-resistance-project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/05-MS_data_processing.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Dian-portfolio.pdf", "Dian-portfolio.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
