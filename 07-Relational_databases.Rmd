@@ -1,0 +1,244 @@
+# Relational databases
+## Introduction
+On this page data about flu and dengue fever occurrences between 2002 and 2015 will be analyzed. This data is from Google Dengue Trends weekly dengue activity for the world and Google Flu Trends weekly influenza activity estimates for the world. The used data can aslo be downloaded here: <br>
+Data Source: Google Dengue Trends (http://www.google.org/denguetrends) <br>
+Data Source: Google Flu Trends (http://www.google.org/flutrends) <bt>
+https://github.com/DataScienceILC/tlsc-dsfb26v-20_workflows/tree/main/data <br>
+
+## Required packages
+The following packages must be installed to perform the code. I highly recommend to download the required packages before running the code. <br>
+```{r Loading all needed packages, message=FALSE, warning=FALSE}
+# install.packages("gapminder")
+# install.packages("tidyverse")
+# install.packages("RPostgreSQL")
+# install.packages("Rpostgres")
+# install.packages("devtools")
+# install.packages("remotes")
+# install.packages("dplyr")
+# install.packages("ggplot2")
+# install.packages("dslabs")
+# install.packages("here")
+```
+
+## Tidy data
+Before we can analyze the data, the data must be tidied. The following code was used to load and tidy the datasets. <br>
+```{r tidy data, message=FALSE, warning=FALSE}
+# Load library
+library(tidyverse)
+
+# Load datasets into dataframes
+# Change the file path to your own structure
+data_flu <- read_csv(("./Data_raw/flu_data.csv"), skip = 11) %>% as_tibble()
+
+data_dengue <- read_csv(("./Data_raw/dengue_data.csv"), skip = 11) %>% as_tibble()
+
+data_gapminder <- dslabs::gapminder %>% as_tibble()
+
+# Tidy the data
+tidy_flu <- data_flu %>%
+  pivot_longer(cols = Argentina:Uruguay,
+               names_to = "country",
+               values_to = "searches")
+
+tidy_dengue <- data_dengue %>%
+  pivot_longer(cols = Argentina:Venezuela,
+               names_to = "country",
+               values_to = "searches")
+
+# Check the datasets
+str(data_flu)
+str(data_dengue)
+str(data_gapminder)
+```
+
+After changing the data to a tidy format, the date column must be differentiated into three different columns. The new columns will be named day, month and year. <br>
+```{r data class, warning=FALSE, message=FALSE}
+# Split the Date column to three different columns named day, month and year
+tidy_flu <- tidy_flu %>% separate(Date, c("year", "month", "day"))
+
+tidy_dengue <- tidy_dengue %>% separate(Date, c("year", "month", "day"))
+
+# Changing the data to the correct data class
+## Flu data
+tidy_flu$year <- as.numeric(tidy_flu$year)
+tidy_flu$month <- as.numeric(tidy_flu$month)
+tidy_flu$day <- as.numeric(tidy_flu$day)
+
+## Dengue data
+tidy_dengue$year <- as.numeric(tidy_dengue$year)
+tidy_dengue$month <- as.numeric(tidy_dengue$month)
+tidy_dengue$day <- as.numeric(tidy_dengue$day)
+
+# Check the tidy data
+str(tidy_dengue)
+str(tidy_flu)
+```
+
+The tidy datasets will now be stored in new .csv and .rds files. The new files are stored in the data folder.<br>
+```{r Save new files, warning=FALSE, message=FALSE}
+# Tidy data to new .csv file
+tidy_flu %>% write.csv(file = "./Data/tidy_flu.csv")
+tidy_dengue %>% write.csv(file = "./Data/tidy_denque.csv")
+data_gapminder %>% write.csv(file = "./Data/gapminder.csv")
+
+# Tidy data to new .rds file
+saveRDS(tidy_flu, file = "./Data/tidy_flu.rds")
+saveRDS(tidy_dengue, file = "./Data/tidy_denque.rds")
+saveRDS(data_gapminder, file = "./Data/gapminder.rds")
+```
+
+## Inspecting the data with DBeaver
+After putting the datasets in seperate files, the data will be stored using DBeaver. To establish this, the 23.0.5 version of DBeaver was used. 
+```{r DBeaver, warning=FALSE, message=FALSE, eval=FALSE}
+# Load library
+library("RPostgres")
+library("RPostgreSQL")
+library("remotes")
+library("devtools")
+
+# Export the tidy data to DBeaver 
+## To export the data to DBeaver requires a password, wich is unique for all users. The password in the code is a fake password for privacy reasons.
+
+# Open conncention
+con <- dbConnect(RPostgres::Postgres(),
+                  dbname = "workflowsdb",
+                  host = "localhost",
+                  port = "5432",
+                  user = "postgres",
+                  password = "datascience12")
+
+# Write to DBeaver
+dbWriteTable(con, "tidy_flu", tidy_flu)
+dbWriteTable(con, "tidy_dengue", tidy_dengue)
+dbWriteTable(con, "data_gapminder", data_gapminder)
+
+# Close connection
+dbDisconnect(con) 
+
+# Inspect the data in Dbeaver
+## The following steps are the steps taken in DBeaver. For the impression of the code the tidy_dengue dataset was used. In DBeaver the code was performed for all 3 datasets. 
+
+# SELECT "Searches", "Country"
+# FROM tidy_dengue td order
+# BY "Searches" asc
+
+# SELECT "Searches", "Country" 
+# FROM tidy_dengue td  order
+# BY "Searches" desc
+```
+
+## Inspecting the data with dplyr 
+We have inspected the datasets in DBeaver, but it is also possible to inspect the data with the dplyr package in R. 
+```{r inspecting with dplyr, warning=FALSE, message=FALSE}
+# Load library
+library(dplyr)
+
+# Inspect the data
+glimpse(tidy_flu)
+glimpse(tidy_dengue)
+glimpse(data_gapminder)
+```
+
+After we have inspected our data we can join the datasets. Before joining the data, we will first save the new gapminder dataframe to DBeaver. <br>
+```{r gapminder to DBeaver, warning=FALSE, message=FALSE, eval=FALSE}
+# Be aware of changing the dbname, host, password and user to your own settings when using this code. 
+# Open conncention
+con <- dbConnect(RPostgres::Postgres(),
+                  dbname = "workflowsdb",
+                  host = "localhost",
+                  port = "5432",
+                  user = "postgres",
+                  password = "datascience12")
+
+# Write to DBeaver
+dbWriteTable(con, "gapminder_clean", gapminder_data_clean, overwrite = TRUE)
+
+# Close connection
+dbDisconnect(con) 
+```
+
+Now that the new gapminder data is saved to DBeaver we can join the datasets. <br>
+```{r Joining data, warning=FALSE, message=FALSE}
+# Joining the flu and dengue data
+joined_data <- full_join(tidy_flu,
+                         tidy_dengue,
+                         by = c("country", "year"),
+                         suffix = c("_flu", "_dengue"))
+
+# Joining with gapminder
+joined_data <- inner_join(joined_data,
+                          data_gapminder,
+                          by = c("country", "year"))
+
+# Check
+str(joined_data)
+```
+
+## Data visualisation
+Now that we have a table with all the data we can perform some descriptive statistics. For now we will focus on the flu and dengue fever occurrences for each continent.  <br>
+```{r Visualisation continent, warning=FALSE, message=FALSE}
+# Load library
+library(ggplot2)
+
+# Flu occurences per continent
+joined_data %>% 
+  group_by(year, continent) %>% 
+  mutate(occurrences_flu = mean(searches_flu, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = occurrences_flu)) + 
+  geom_line(aes(colour = continent))+
+      labs(
+    title = "Flu occurrences for each continent")
+
+# Dengue occurences per continent
+joined_data %>% 
+  group_by(year, continent) %>% 
+  mutate(occurrences_dengue = mean(searches_dengue, na.rm = TRUE)) %>% 
+  ggplot(aes(x = year, y = occurrences_dengue)) + 
+  geom_line(aes(colour = continent)) +
+  labs(
+    title = "Dengue occurrences for each continent")
+```
+
+Based on the graphs above, the following conclusions can be drawn. The highest occurrence of flu is in Africa. The other continents have similar values. For dengue fever the occurrences in America and Asia are similar. The other continents have no occurrences of dengue fever between 2002 and 2015. <br>
+
+To visualize the statistical difference between the occurrence of dengue fever and flu, the continent America was chosen to give an example of this test. <br>
+```{r descriptive statistics, warning=FALSE, message=FALSE}
+# Subset data for America
+# You can change this part of the code to any continent you like
+america_flu <- joined_data %>% filter(continent == "Americas")
+america_dengue <- joined_data %>% filter(continent == "Americas")
+
+# Perform t-test
+t_test <- t.test(america_flu$searches_flu, america_dengue$searches_dengue)
+
+# Display t-test results
+t_test
+```
+
+Now that we have an overview of the dengue fever and flu occurrences for each continent, we can focus on the occurrences for each specific country. <br>
+```{r Visualisation country, warning=FALSE, message=FALSE}
+# Dengue cases per country
+joined_data %>%
+ggplot() + 
+  geom_col(aes(x = country, y = searches_dengue, fill = country))+
+  labs(title = "Dengue cases for each country",
+       y="Dengue occurrences")+
+  theme(axis.text.x = element_text(angle = 45,
+                                   hjust = 1),
+        legend.position = "none")
+
+# Flu cases per country
+joined_data %>%
+ggplot() + 
+  geom_col(aes(x = country, y = searches_flu, fill = country))+
+  labs(title = "Flu cases for each country",
+       y="Flu occurrences") +
+   theme(axis.text.x = element_text(angle = 45,
+                                   hjust = 1),
+        legend.position = "none")
+```
+
+
+## Conclusion
+Based on the graphs above the following conclusions can be drawn. When considering the dengue occurrences per country, we can see that the highest occurrence is in Mexico, followed by Brazil, Argentina and Bolivia. <br>
+When looking at the flu occurrences per country, we can see that the highest occurrence is in Mexico, followed by Bolivia, Brazil and Argentina. <br>
